@@ -1,27 +1,21 @@
 package lab.concert.app.domain;
 
-
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-/**
- * Class to represent a Concert. A Concert is characterised by an unique ID,
- * title, date and time, and a featuring Performer.
- * <p>
- * Concert implements Comparable with a natural ordering based on its title.
- * Hence, in a List, Concert instances can be sorted into alphabetical order
- * based on their title value.
- */
-//TODO: Add annotations to map this class to the database
-public class Concert {
+@Entity
+public class Concert implements Comparable<Concert> {
 
-   //TODO: Add annotations 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // use DB auto-increment
     private Long id;
+
     private String title;
+
     private LocalDateTime date;
 
-    //TODO: Add annotations to map relationship
+    @ManyToOne
+    @JoinColumn(name = "performer_id", nullable = false) // FK column in concert table
     private Performer performer;
 
     public Concert(Long id, String title, LocalDateTime date, Performer performer) {
@@ -66,4 +60,13 @@ public class Concert {
         return performer;
     }
 
+    public void setPerformer(Performer performer) {
+        this.performer = performer;
+    }
+
+    // Natural ordering by title
+    @Override
+    public int compareTo(Concert other) {
+        return this.title.compareTo(other.title);
+    }
 }

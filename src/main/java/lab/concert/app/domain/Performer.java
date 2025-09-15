@@ -1,21 +1,19 @@
 package lab.concert.app.domain;
 
-
 import javax.persistence.*;
 
-/**
- * Class to represent a Performer (an artist or band that plays at Concerts). A
- * Performer object has an ID (a database primary key value), a name, the name
- * of an image file, and a genre.
- */
-//TODO: add annotations to map this class to the database
+@Entity
 public class Performer {
 
-    //TODO: add annotations
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // uses AUTO_INCREMENT in schema.sql
     private Long id;
-    private String name;
-    private String imageUri;
 
+    private String name;
+
+    // This should map to your DB column for image. If schema.sql uses "image_uri", this is fine.
+    // If schema.sql uses a different name (like "image_file"), we must use @Column(name = "image_file")
+    private String imageUri;
 
     public Performer() { }
 
@@ -52,8 +50,4 @@ public class Performer {
     public void setImageUri(String imageUri) {
         this.imageUri = imageUri;
     }
-
-
-
-
 }

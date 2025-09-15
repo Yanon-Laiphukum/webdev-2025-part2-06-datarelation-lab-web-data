@@ -1,12 +1,11 @@
 package lab.concert.app;
 
-import java.util.List;
-
+import java.util.Optional;
 import org.springframework.data.repository.CrudRepository;
-
 import lab.concert.app.domain.Concert;
 
-//TODO: add appropriate code to extend CrudRepository
-public interface ConcertRepository  {
-      
+public interface ConcertRepository extends CrudRepository<Concert, Long> {
+
+    // Spring Data JPA will implement this automatically
+    Optional<Concert> findByTitle(String title);
 }
